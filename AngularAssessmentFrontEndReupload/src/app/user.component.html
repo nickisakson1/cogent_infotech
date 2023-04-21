@@ -1,0 +1,67 @@
+<div class="container">
+    <div class="card">
+        <h3 class="text-center">User</h3>
+        <div class="card-body">
+            <form style="border:solid" #addform='ngForm' (ngSubmit)="addUser(addform)">
+                <div>
+                    <label for="userName">Name</label>
+                    <input type="text" [(ngModel)]='userTemp.userName' name="userName" required>
+                </div>
+                <div>
+                    <label for="userAge">Age</label>
+                    <input type="text" [(ngModel)]='userTemp.userAge' name="userAge" required>
+                </div>
+                <div>
+                    <label for="userSalary">Salary</label>
+                    <input type="text" [(ngModel)]='userTemp.userSalary' name="userSalary" required>
+                </div>
+                <button  type="submit" name="loginButton">Add</button>
+                <button (onclick)="resetForm()">Reset Form</button>
+            </form>
+        </div>
+    </div>
+    <div class="card">
+        <h3 class="text-center">User List</h3>
+        <div class="card-body">
+            <table class="table table-striped" style="border:solid">
+                <thead>
+                    <th>User Id</th>
+                    <th>User Name</th>
+                    <th>User Age</th>
+                    <th>User Salary</th>
+                    <th></th>
+                    <th></th>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let user of users; let i = index;">
+                        <script>
+
+                        </script>
+                        <td>{{user.userId}}</td>
+                        <td>{{user.userName}}</td>
+                        <td>{{user.userAge}}</td>
+                        <td>{{user.userSalary}}</td>
+                        <button (click)="editUser(i)">Edit</button>
+                        <button (click)="deleteUser(i)">Remove</button>
+                        <div *ngIf="users[i].showForm">
+                            <div>
+                                <label for="userName">Name</label>
+                                <input type="text" [(ngModel)]='user.userName' name="userName" required>
+                            </div>
+                            <div>
+                                <label for="userAge">Age</label>
+                                <input type="text" [(ngModel)]='user.userAge' name="userAge" required>
+                            </div>
+                            <div>
+                                <label for="userSalary">Salary</label>
+                                <input type="text" [(ngModel)]='user.userSalary' name="userSalary" required>
+                            </div>
+                            <button (click)="updateUser(i)" name="addButton">Submit</button>
+                            <button (click)="cancelForm(i)">Cancel</button>
+                        </div>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
