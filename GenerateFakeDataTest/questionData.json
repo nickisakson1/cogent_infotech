@@ -1,0 +1,50 @@
+{
+    "questions": [
+      {
+        "id": 1,
+        "title": "What is the best way to learn programming?",
+        "tags": "programming, learning, education",
+        "views": 23,
+        "answers": 7,
+        "image": "https://example.com/programming.jpg",
+        "question_body": "I'm new to programming and I'm not sure what's the best way to learn. Should I take a course, read books, or watch tutorials? Are there any particular resources that are recommended for beginners?"
+      },
+      {
+        "id": 2,
+        "title": "What are some tips for improving your public speaking skills?",
+        "tags": "public speaking, communication, tips",
+        "views": 15,
+        "answers": 3,
+        "image": "https://example.com/public-speaking.jpg",
+        "question_body": "I have to give a presentation at work next week and I'm really nervous about it. What are some tips for improving my public speaking skills? How can I overcome my fear of speaking in front of others?"
+      },
+      {
+        "id": 3,
+        "title": "What are the most important things to consider when starting a business?",
+        "tags": "entrepreneurship, business, startup",
+        "views": 31,
+        "answers": 12,
+        "image": "https://example.com/business.jpg",
+        "question_body": "I'm thinking about starting my own business, but I'm not sure where to begin. What are the most important things to consider when starting a business? How can I create a business plan that will help me succeed?"
+      },
+      {
+        "id": 4,
+        "title": "What are some effective study techniques for memorizing large amounts of information?",
+        "tags": "studying, memory, techniques",
+        "views": 47,
+        "answers": 8,
+        "image": "https://example.com/studying.jpg",
+        "question_body": "I have a big exam coming up and I need to memorize a lot of information. What are some effective study techniques for memorizing large amounts of information? Are there any tricks or strategies that can help me retain more information?"
+      },
+      {
+        "id": 5,
+        "title": "How can I improve my time management skills?",
+        "tags": "General",
+        "views": 56,
+        "answers": 16,
+        "image": "https://example.com/time-management.jpg",
+        "question_body": "I always feel like I'm running out of time and I can't get everything done that I need to. How can I improve my time management skills? Are there any tools or techniques that can help me prioritize my tasks and make better use of my time?"
+      }
+    ]
+  }
+  
