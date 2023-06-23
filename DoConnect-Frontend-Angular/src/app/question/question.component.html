@@ -1,0 +1,98 @@
+<div class="d-flex flex-column text-white">
+    <div class="py-2 text-center"><h2>{{ questionData?.title }}</h2></div>
+    <div class="row">
+      <div class="col-md-6 col-sm-12">
+        <div class="d-flex flex-column my-2 question-card">
+          <div class="d-flex flex-row justify-content-between">
+            <strong>Topic</strong>
+            <span>{{ questionData?.topic }}</span>
+          </div>
+          <div class="d-flex flex-row justify-content-between">
+            <strong>Question Description</strong>
+            <span>{{ questionData?.description_question }}</span>
+          </div>
+          <div class="d-flex flex-row justify-content-between">
+            <strong>Posted By</strong>
+            <span>{{ questionData?.qcreated_by?.username }}</span>
+          </div>
+          <div class="d-flex flex-row justify-content-between">
+            <strong>Posted At</strong>
+            <span>{{ questionData?.datetime | date:'medium' }}</span>
+          </div>
+          <div class="d-flex flex-row justify-content-between">
+            <strong>Approved By</strong>
+            <span>{{ questionData?.qapproved_by.username }}</span>
+          </div>
+          <div class="d-flex flex-wrap flex-row justify-content-between">
+            <strong>Image</strong>  
+            <img [attr.src]=" questionData?.image_src" alt="image" height="100" />
+          </div>
+        </div>
+        <form [formGroup]="answerForm" (ngSubmit)="submit()">
+          <div class="form-group py-2">
+            <label for="answer" class="form-label">Your Answer</label>
+            <textarea class="form-control" formControlName="answer" rows="5" id="answer" maxlength="1000" required></textarea>
+            <div
+              *ngIf="(answerForm.get('answer')?.dirty || answerForm.get('answer')?.touched) && answerForm.get('answer')?.errors?.['required']">
+              Answer is required
+            </div>
+          </div>
+          <!-- <div class="py-2 d-flex justify-content-end">
+            <button class="btn btn-success" type="submit" [disabled]="!answerForm.valid">Submit</button>
+          </div> -->
+          <div class="form-group py-2 d-flex flex-column">
+            <label for="image" class="form-label">Image</label>
+            <input type="text" formControlName="image" id="image" (change)="onChange($event)" />
+            <!-- <small id="image" class="form-text text-muted">Only '.png' and '.jpeg' are supported</small> -->
+          </div>
+          <!-- <div class="form-group py-2 d-flex flex-column">
+            <div *ngFor="let imageName of uploadedImage" class="p-1">
+              <img [attr.src]="getImageUrl(imageName) | secure | async" alt="image" height="100" />
+            </div>
+          </div> -->
+          <div class="py-2 d-flex">
+            <button class="btn btn-success" type="submit" [disabled]="!answerForm.valid || isloading">Submit</button>
+          </div>
+          <div class="form-group py-2 d-flex flex-column">
+
+            <img [src]="answerForm.value.image" width=20% style="float: right;">
+          </div>
+        </form>
+      </div>
+      <div class="col-md-6 col-sm-12">
+        <div class="pb-2 text-center"><h4>Other Answers</h4></div>
+        <div class="d-flex flex-column">
+          <div *ngFor="let answerData of answersList">
+            <div class="d-flex flex-column mt-2 answer-card" style="border-radius: 0.5rem; border: 1px solid; padding: 0.5rem; color:black;">
+              <strong class="mb-2 text-center">{{ answerData.description_answer }}</strong>
+              <div class="d-flex flex-row justify-content-between">
+                <strong>Posted By</strong>
+                <span>{{ answerData?.acreated_by?.username }}</span>
+              </div>
+              <div class="d-flex flex-row justify-content-between">
+                <strong>Posted At</strong>
+                <span>{{ answerData?.datetime | date:'medium' }}</span>
+              </div>
+              <div class="d-flex flex-row justify-content-between">
+                <strong>Approved By</strong>
+                <span>{{ answerData?.aapproved_by.username }}</span>
+              </div>
+              <div class="d-flex flex-row justify-content-between">
+                <strong>Answer</strong>
+                <span>{{ answerData?.description_answer }}</span>
+              </div>
+              <!-- <div class="d-flex flex-wrap flex-row justify-content-end">
+                <div *ngFor="let imageName of answerData?.img_src" class="p-1">
+                  <img [attr.src]="getImageUrl(imageName) | secure | async" alt="image" height="100" />
+                </div> -->
+                <div class="d-flex flex-row justify-content-between">
+                    <strong>Image</strong>
+                    <span><img [src]="answerData.img_src" onError="this.src ='assets/images/error.png'" width=80% style="float: right;"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

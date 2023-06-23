@@ -1,0 +1,57 @@
+.chatbox {
+    color: blue;
+    height: max(50vh, 450px);
+    width: max(30vw, 300px);
+    background: #667db6;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #667db6, #0082c8, #0082c8, #667db6);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #667db6, #0082c8, #0082c8, #667db6); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    
+    padding: 0.5rem;
+    position: absolute;
+    bottom: 8rem;
+    right: 2rem;
+    border-radius: 0.5rem;
+    z-index: 5;
+  }
+  
+  .inputbox {
+    bottom: 0;
+    padding-top: 0.25rem;
+  }
+  
+  .message-box {
+    height: calc(100% - 40px);
+    border: 1px;
+    overflow: auto;
+    position: relative;
+  }
+  
+  .message {
+    background: #0052D4;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #7db6f8, #6883f7, #4376c8);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #81bafb, #647ff9, #366abe); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    
+    color: black;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .message-right {
+    text-align: right;
+    color: white;
+  }
+  
+  .message-left {
+    text-align: left;
+    color: white;
+  }
+  
+  .message-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-size: smaller;
+  }
+  

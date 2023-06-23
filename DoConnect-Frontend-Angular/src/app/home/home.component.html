@@ -1,0 +1,146 @@
+<!-- <div class="container text-white">
+    <h2 class="text-center py-4">All Questions</h2> -->
+    <!-- <div *ngIf="userType == 'user' && isUserLoggedIn == true" class="input-group">
+      <select class='select-option' #topicSelect (change)='onTopicSelected(topicSelect.value)' style="border-radius: 0.5rem; margin-right: 1rem;">
+        <option class='option' *ngFor='let option of topicOptions' [value]="option">{{ option }}</option>
+      </select>
+      <input [(ngModel)]="search" type="search" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="search-addon" style="border-top-left-radius: 0.5rem; border-bottom-left-radius: 0.5rem; transition: none;" />
+      <button class="btn btn-info text-white" id="search-addon" (click)="onSearch()">
+        <i class="fa fa-search fa-lg"></i>
+      </button>
+    </div> -->
+
+    <!-- <div *ngIf="userType == 'user' && isUserLoggedIn == true" [style.display]="chatbox">
+      <app-chat></app-chat>
+    </div>
+    <button *ngIf="userType == 'user' && isUserLoggedIn == true" id="chatButton" class="btn btn-primary chat-button" (click)="toggleChatBox()">
+      <i class="fa {{ (chatbox == 'none') ? 'fa-chevron-up' : 'fa-chevron-down' }}"></i> {{ chatButton }}
+    </button>
+  </div> -->
+  <div class="text-center text-white" style="font-size: 2rem; padding-top: 2rem" *ngIf="isUserLoggedIn == false">
+    <p>Welcome to DoConnect!</p>
+    <br>
+    <p>Please register or login to ask questions, answer questions or chat with users</p>
+  </div>
+  
+<div *ngIf="isUserLoggedIn == true">
+   <div class="container text-white pt-2">
+    <div class="row">
+      <div class="d-flex justify-content-around">
+        <button class="btn {{ (mode === 'questions') ? 'btn-primary' : 'btn-secondary' }}" (click)="getApprovedQuestions()">
+          Questions
+        </button>
+        <button class="btn {{ (mode === 'chats') ? 'btn-primary' : 'btn-secondary' }}" (click)="getUsersChat()">
+            All Users Chat List
+        </button>
+      </div>
+    </div>
+      <div  *ngIf="mode == 'questions'">
+        <select class='select-option' #topicSelect (change)='onTopicSelected(topicSelect.value)' style="border-radius: 0.5rem; margin-right: 1rem;">
+            <option class='option' *ngFor='let option of topicOptions' [value]="option">{{ option }}</option>
+        </select>
+        <input [(ngModel)]="search" type="search" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="search-addon" style="border-top-left-radius: 0.5rem; border-bottom-left-radius: 0.5rem; transition: none;" />
+        <button class="btn btn-info text-white" id="search-addon" (click)="onSearch()">Search
+            <i class="fa fa-search fa-lg"></i>
+        </button>
+      </div>
+    <div class="row pt-2">
+      <div *ngIf="mode == 'questions'">
+        <div>
+
+        </div>
+        <div *ngIf="questionList.length === 0" class="d-flex justify-content-center mt-2">
+          <span>No questions</span>
+        </div>
+        <div class="row d-flex flex-wrap mt-2">
+
+
+            <div *ngFor="let question of questionList;" class="col-lg-4 col-md-6 p-2">
+              <div class="bg-white text-dark p-2 question-card">
+                <strong>Question</strong>
+                <p class="mb-0">{{ question.title }}</p>
+                <div class="d-flex flex-column mt-2">
+                    <!-- <div class="d-flex flex-row justify-content-between">
+                        <Strong>Question Description</Strong>
+                        <span>{{ question.description_question }}</span>
+                      </div> -->
+                    <div class="d-flex flex-row justify-content-between">
+                    <Strong>Topic</Strong>
+                    <span>{{ question.topic }}</span>
+                  </div>
+                  <div class="d-flex flex-row justify-content-between">
+                    <Strong>Image</Strong>
+                    <span><img [src]="question.image_src" onError="this.src ='assets/images/error.png'" width=80% style="float: right;"></span>
+                  </div>
+                  <div class="d-flex flex-row justify-content-between">
+                    <strong>Posted By</strong>
+                    <span>{{ question.qcreated_by.username }}</span>
+                  </div>
+                  <div class="d-flex flex-row justify-content-between">
+                    <strong>Posted At</strong>
+                    <span>{{ question.datetime | date:'medium' }}</span>
+                  </div>
+                  <div class="pt-2">
+                    <button class="btn btn-warning" (click)="openQuestion(question.id)">
+                      View Answers
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+          </div>
+          <div [style.display]="chatbox">
+            <app-global-chat></app-global-chat>
+          </div>
+          <button *ngIf="isAdmin == false && isUserLoggedIn == true" id="chatButton" class="btn btn-primary chat-button" (click)="toggleChatBox()">
+            <i class="fa {{ (chatbox == 'none') ? 'fa-chevron-up' : 'fa-chevron-down' }}"></i> {{ chatButton }}
+          </button>
+      </div>
+    </div>
+
+    <div *ngIf="mode == 'chats'">
+        <div *ngIf="userList.length === 0" class="d-flex justify-content-center mt-2">
+            <span>No users exist</span>
+          </div>
+          <!-- <div cdkDrag> -->
+
+          <table *ngIf="userList.length !== 0" class="table table-dark text-center">
+            <thead>
+              <th>Username</th>
+              <!-- <th>Name</th> -->
+              <!-- <th>Email</th> -->
+              <th>Role</th>
+              <th>Chat with User</th>
+            </thead>
+            <tbody>
+              <tr *ngFor="let user of userList">
+                <td class="align-middle">{{ user.username }}</td>
+                <td class="align-middle">{{ user.name }}</td>
+                <td class="align-middle">{{ user.email }}</td>
+                <td class="align-middle">{{ user.userType === "admin" ? "admin" : "user" }}</td>
+                <td class="align-middle">
+                  <button class="btn btn-success mx-1" (click)="onChat(user.username)">
+                    <i class="fa fa-trash fa-lg" aria-hidden="true">Chat</i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <!-- </div> -->
+      </div>
+      <div cdkDrag>
+        <!-- <div *ngIf="mode == 'chats' && isUserLoggedIn == true" class="example-box"> -->
+
+        <!-- </div> -->
+        <div *ngIf="mode == 'chats' && isUserLoggedIn == true">
+            <app-chat class="appchat"></app-chat>
+        </div>
+      </div>
+
+
+
+  </div>
+
+  </div>

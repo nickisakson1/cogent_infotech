@@ -1,0 +1,195 @@
+<div class="container text-white pt-4">
+    <div class="row">
+      <div class="d-flex justify-content-around">
+        <button class="btn {{ (mode === 'questions') ? 'btn-primary' : 'btn-secondary' }}" (click)="getUnapprovedQuestions()">
+          Unapproved Questions
+        </button>
+        <button class="btn {{ (mode === 'answers') ? 'btn-primary' : 'btn-secondary' }}" (click)="getUnapprovedAnswers()">
+          Unapproved Answers
+        </button>
+        <button class="btn {{ (mode === 'users') ? 'btn-primary' : 'btn-secondary' }}" (click)="getUsers()">
+          All Users List
+        </button>
+        <button class="btn {{ (mode === 'chats') ? 'btn-primary' : 'btn-secondary' }}" (click)="getUsersChat()">
+            All Users Chat List
+        </button>
+      </div>
+    </div>
+    <div class="row pt-4">
+      <div *ngIf="mode == 'questions'">
+        <div *ngIf="questionList.length === 0" class="d-flex justify-content-center mt-2">
+          <span>No questions to approve</span>
+        </div>
+        <table *ngIf="questionList.length !== 0" class="table table-dark text-center">
+          <thead>
+            <th>Id</th>
+            <th>Title</th>
+            <th>Question</th>
+            <th>Topic</th>
+            <th>Posted By</th>
+            <th>Posted At</th>
+            <th>Status</th>
+            <th>Image</th>
+            <th>Approve</th>
+            <th>Delete</th>
+          </thead>
+          <tbody>
+            <tr *ngFor="let question of questionList">
+              <td class="align-middle">{{ question.id }}</td>
+              <td class="align-middle">{{ question.title }}</td>
+              <td class="align-middle">{{ question.description_question }}</td>
+              <td class="align-middle">{{ question.topic }}</td>
+              <td class="align-middle">{{ question.qcreated_by.username }}</td>
+              <td class="align-middle">{{ question.datetime | date: 'medium' }}</td>
+              <td class="align-middle">{{ question.status }}</td>
+              <td class="align-middle"><img [src]="question.image_src" onError="this.src ='assets/images/error.png'" width=80% style="float: right;"></td>
+              <td class="align-middle">
+                <button
+                  [disabled]="isloading"
+                  class="btn btn-success mx-1"
+                  (click)="onApproveQuestion(question.id)"
+                >
+                    Approve
+                  <i class="fa fa-check fa-lg" aria-hidden="true"></i>
+                </button>
+              </td>
+              <td class="align-middle">
+                <button
+                [disabled]="isloading"
+                  class="btn btn-danger mx-1"
+                  (click)="onDeleteQuestion(question.id)"
+                >
+                    Delete
+                  <i class="fa fa-trash fa-lg" aria-hidden="true"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div *ngIf="mode == 'answers'">
+        <div *ngIf="answerList.length === 0" class="d-flex justify-content-center mt-2">
+          <span>No answers to approve</span>
+        </div>
+        <table *ngIf="answerList.length !== 0" class="table table-dark text-center">
+          <thead>
+            <th>Id</th>
+            <th>Question</th>
+            <th>Answer</th>
+            <th>Posted By</th>
+            <th>Posted At</th>
+            <th>status</th>
+            <th>Image</th>
+            <th>Approve</th>
+            <th>Delete</th>
+          </thead>
+          <tbody>
+            <tr *ngFor="let answer of answerList">
+              <td class="align-middle">{{ answer.id }}</td>
+              <td class="align-middle">{{ answer.question.description_question }}</td>
+              <td class="align-middle">{{ answer.description_answer }}</td>
+              <td class="align-middle">{{ answer?.acreated_by?.username }}</td>
+              <td class="align-middle">{{ answer.datetime | date:'medium' }}</td>
+              <td class="align-middle">{{ answer.status }}</td>
+              <td class="align-middle"><img [src]="answer.img_src" onError="this.src ='assets/images/error.png'" width=80% style="float: right;"></td>
+              <td class="align-middle">
+                <button
+                  [disabled]="isloading"
+                  class="btn btn-success mx-1"
+                  (click)="onApproveAnswer(answer.id)"
+                >
+                    Approve
+                  <i class="fa fa-check fa-lg" aria-hidden="true"></i>
+                </button>
+              </td>
+                <td class="align-middle">
+                <button
+                  [disabled]="isloading"
+                  class="btn btn-danger mx-1"
+                  (click)="onDeleteAnswer(answer.id)"
+                >
+                    Delete
+                  <i class="fa fa-trash fa-lg" aria-hidden="true"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div *ngIf="mode == 'users'">
+        <div *ngIf="userList.length === 0" class="d-flex justify-content-center mt-2">
+          <span>No users exist</span>
+        </div>
+        <table *ngIf="userList.length !== 0" class="table table-dark text-center">
+          <thead>
+            <th>Username</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Action</th>
+          </thead>
+          <tbody>
+            <tr *ngFor="let user of userList">
+              <td class="align-middle">{{ user.username }}</td>
+              <td class="align-middle">{{ user.name }}</td>
+              <td class="align-middle">{{ user.email }}</td>
+              <td class="align-middle">{{ user.userType === "admin" ? "admin" : "user" }}</td>
+              <td class="align-middle">
+                <button class="btn btn-danger mx-1" (click)="onDelete(user.id)" [disabled]="isloading">
+                  <i class="fa fa-trash fa-lg" aria-hidden="true">Delete</i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div *ngIf="mode == 'chats'">
+        <div *ngIf="userList.length === 0" class="d-flex justify-content-center mt-2">
+            <span>No users exist</span>
+          </div>
+          <!-- <div cdkDrag> -->
+
+          <table *ngIf="userList.length !== 0" class="table table-dark text-center tablechat">
+            <thead>
+              <th>Username</th>
+              <!-- <th>Name</th> -->
+              <!-- <th>Email</th> -->
+              <th>Role</th>
+              <th>Chat with User</th>
+            </thead>
+            <tbody>
+              <tr *ngFor="let user of userList">
+                <td class="align-middle">{{ user.username }}</td>
+                <td class="align-middle">{{ user.name }}</td>
+                <td class="align-middle">{{ user.email }}</td>
+                <td class="align-middle">{{ user.userType === "admin" ? "admin" : "user" }}</td>
+                <td class="align-middle">
+                  <button class="btn btn-success mx-1" (click)="onChat(user.username)">
+                    <i class="fa fa-trash fa-lg" aria-hidden="true">Chat</i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <!-- </div> -->
+      </div>
+      <div cdkDrag>
+        <!-- <div *ngIf="mode == 'chats' && isUserLoggedIn == true" class="example-box"> -->
+
+        <!-- </div> -->
+        <div *ngIf="mode == 'chats' && isUserLoggedIn == true">
+            <app-chat class="appchat"></app-chat>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="mode == 'users' || mode == 'answers' || mode == 'questions'">
+      <div [style.display]="chatbox">
+        <app-global-chat></app-global-chat>
+      </div>
+      <button *ngIf="isUserLoggedIn == true" id="chatButton" class="btn btn-primary chat-button" (click)="toggleChatBox()">
+        <i class="fa {{ (chatbox == 'none') ? 'fa-chevron-up' : 'fa-chevron-down' }}"></i> {{ chatButton }}
+      </button>
+    </div>
+  </div>
+  

@@ -1,0 +1,23 @@
+.question-card {
+    height: 100%;
+    border-radius: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: #ED4264;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to top, #FFEDBC, #ED4264);  
+/* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to top, #FFEDBC, hsl(348, 100%, 84%)); 
+/* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+}
+
+.appchat {
+    width:  calc(50%);
+}
+.chat-button {
+    position: absolute;
+    bottom: 5rem;
+    z-index: 5;
+    right: 2rem;
+}

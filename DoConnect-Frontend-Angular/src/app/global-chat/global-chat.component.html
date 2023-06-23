@@ -1,0 +1,16 @@
+<div class="chatbox" style="background-color: rgb(0, 0, 0);">
+    <div class="message-box" #scrollMe [scrollTop]="scrollMe.scrollHeight">
+      <div *ngFor="let futu of futuResults" class="message">
+        <div class="message-header">
+          <span class="font-weight-light">{{ futu.fromuser }}</span>
+          <span class="font-weight-light">{{ futu.datetime | date: 'medium'}}</span>
+        </div>
+        <span class="{{ (currentUsername === futu.fromuser) ? 'message-right' : 'message-left' }}">{{ futu.message }}</span>
+      </div>
+    </div>
+    <div class="inputbox input-group text-center">
+      <input [(ngModel)]="message" class="form-control" type="text" name="" id="" required/>
+      <button class="btn btn-primary" (click)="onSendMessage()">Send</button>
+    </div>
+  </div>
+  
